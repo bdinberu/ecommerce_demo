@@ -2,7 +2,40 @@ cubes:
   - name: users
     sql_table: "\"ECOM\".\"USERS\""
 
+    access_policy:
+      - role: administrator
+
+      # - role: sales_manager
+      #   member_level:
+      #     excludes:
+      #       - first_name
+      #       - last_name
+      #       - full_name
+      #   row_level:
+      #     filters:
+      #       - member: "{state}"
+      #         operator: equals
+      #         values: "{ [securityContext.state] }"
+
+      - role: '*'
+        member_level:
+          includes:
+            - gender 
+            - city 
+            - state
+        row_level:
+          filters:
+            - member: "{CUBE.state}"
+              operator: equals
+              values: ["{securityContext.state}"]
+
     joins: []
+
+    segments:
+      - name: west_coast_users 
+        description: "customers that live in the west coast of the United States"
+        sql: >
+          {CUBE.city} IN ('Los Angeles', 'Mountain View', 'Palo Alto', 'San Francisco', 'Seattle')
 
     dimensions:
 # primary and foreign keys 
@@ -18,6 +51,7 @@ cubes:
 
 # columns
       - name: age
+        description: "The age of the customer"
         sql: "{CUBE}.\"AGE\""
         type: number
 
@@ -26,18 +60,22 @@ cubes:
         type: string
 
       - name: gender
+        description: "The gender of the customer"
         sql: "{CUBE}.\"GENDER\""
         type: string
 
       - name: last_name
+        description: "The last name of the customer"
         sql: "{CUBE}.\"LAST_NAME\""
         type: string
 
       - name: first_name
+        description: "The first name of the customer"
         sql: "{CUBE}.\"FIRST_NAME\""
         type: string
 
       - name: full_name
+        description: "The full name of the customer"
         sql: "{CUBE.first_name} || ' ' || {CUBE.last_name}"
         type: string 
 

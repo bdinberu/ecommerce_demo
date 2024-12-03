@@ -19,7 +19,7 @@ views:
               - number_of_items
           - name: "Totals"
             members:
-              - total_price
+              - total_revenue
           - name: "Averages"
             members:
               - average_days_to_complete
@@ -46,7 +46,7 @@ views:
 
       - join_path: orders.line_items
         includes:
-          - total_price
+          - total_revenue
           - number_of_items
 
       - join_path: orders.line_items.products 
