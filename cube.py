@@ -9,7 +9,7 @@ def sls(ctx: dict) -> list:
   "type": "tableau-cloud",
   "name": "Tableau Cloud Sync",
   "config": {
-    "database": "Cube Cloud: ecomm_bd",
+    "database": "Cube Cloud: bd_ecomm_demo",
     "personalAccessToken": "ecomm_demo_bd",
     "personalAccessTokenSecret": "CaSfFFyOR3mj1ncwLQHAww==:8jUMFFHdlhXSdcbdH6VZFzxHfQKZPsrL",
     "region": "us-west-2b",
