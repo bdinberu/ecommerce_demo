@@ -5,15 +5,18 @@ cubes:
     joins: []
 
     dimensions:
+# primary and foreign keys 
       - name: id
         sql: "{CUBE}.\"ID\""
         type: number
         primary_key: true
 
-      - name: user_id
-        sql: "{CUBE}.\"USER_ID\""
-        type: number
+# time columns 
+      - name: created_at
+        sql: "{CUBE}.\"CREATED_AT\""
+        type: time
 
+# columns
       - name: age
         sql: "{CUBE}.\"AGE\""
         type: number
@@ -34,16 +37,17 @@ cubes:
         sql: "{CUBE}.\"FIRST_NAME\""
         type: string
 
+      - name: full_name
+        sql: "{CUBE.first_name} || ' ' || {CUBE.last_name}"
+        type: string 
+
       - name: state
         sql: "{CUBE}.\"STATE\""
         type: string
 
-      - name: created_at
-        sql: "{CUBE}.\"CREATED_AT\""
-        type: time
-
+# aggregations 
     measures:
-      - name: count
+      - name: number_of_users
         type: count
 
     pre_aggregations:

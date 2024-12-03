@@ -4,10 +4,15 @@ cubes:
 
     joins:
       - name: users
-        sql: "{CUBE}.\"USER_ID\" = {users}.\"USER_ID\""
+        sql: "{orders.user_id} = {users.id}"
         relationship: many_to_one
+      
+      - name: line_items
+        sql: "{orders.id} = {line_items.order_id}" 
+        relationship: one_to_many
 
     dimensions:
+# primary and foreign keys 
       - name: id
         sql: "{CUBE}.\"ID\""
         type: number
@@ -17,10 +22,7 @@ cubes:
         sql: "{CUBE}.\"USER_ID\""
         type: number
 
-      - name: status
-        sql: "{CUBE}.\"STATUS\""
-        type: string
-
+# time columns 
       - name: created_at
         sql: "{CUBE}.\"CREATED_AT\""
         type: time
@@ -29,9 +31,37 @@ cubes:
         sql: "{CUBE}.\"COMPLETED_AT\""
         type: time
 
+# columns 
+      - name: status
+        sql: "{CUBE}.\"STATUS\""
+        type: string
+      
+      - name: days_to_complete
+        description: "The number of days between order creation and completion"
+        type: number
+        sql: "TIMESTAMPDIFF('DAY', {CUBE.created_at}, {CUBE.completed_at})"
+
+# aggregations 
     measures:
-      - name: count
+      - name: number_of_orders
         type: count
+
+      - name: number_of_completed_orders
+        description: "The number of orders with the status 'completed'"
+        type: count
+        filters:
+          - sql: "{CUBE.status} = 'completed'"
+
+      - name: completed_order_percentage
+        description: "Percent of orders with the status 'completed'"
+        type: number
+        sql: "(number_of_completed_orders/NULLIF(number_of_orders,0)) * 100"
+        format: percent
+
+      - name: average_days_to_complete 
+        description: "Average number of days between order creation and completion"
+        type: avg
+        sql: "{CUBE.days_to_complete}"
 
     pre_aggregations:
       # Pre-aggregation definitions go here.

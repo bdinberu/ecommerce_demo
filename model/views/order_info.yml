@@ -1,0 +1,56 @@
+views:
+  - name: order_information
+    description: "This view contains information about orders placed"
+    meta:
+
+# Excel drill-down hierarchies 
+      hierarchies:
+        - name: "Geography"
+          levels:
+            - state
+            - city
+
+#Excel measure folders 
+      folders:
+          - name: "Counts"
+            members:
+              - number_of_orders
+              - number_of_completed_orders
+              - number_of_items
+          - name: "Totals"
+            members:
+              - total_price
+          - name: "Averages"
+            members:
+              - average_days_to_complete
+          - name: "Percentages"
+            members:
+              - completed_order_percentage
+
+# tables to be included in view    
+    cubes:  
+      - join_path: orders
+        includes: "*"
+        excludes:
+          - id
+          - user_id
+          - completed_at
+
+      - join_path: orders.users 
+        includes:
+          - age
+          - gender
+          - city 
+          - state
+          - number_of_users
+
+      - join_path: orders.line_items
+        includes:
+          - total_price
+          - number_of_items
+
+      - join_path: orders.line_items.products 
+        includes:
+          - name
+          - product_category
+          - number_of_products
