@@ -1,6 +1,7 @@
 cubes:
   - name: orders
     sql_table: "\"ECOM\".\"ORDERS\""
+    public: false
 
     joins:
       - name: users

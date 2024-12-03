@@ -1,6 +1,7 @@
 cubes:
   - name: users
     sql_table: "\"ECOM\".\"USERS\""
+    public: false
 
     access_policy:
       - role: administrator
