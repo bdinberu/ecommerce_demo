@@ -1,0 +1,52 @@
+cubes:
+  - name: users
+    sql_table: "\"ECOM\".\"USERS\""
+
+    joins: []
+
+    dimensions:
+      - name: id
+        sql: "{CUBE}.\"ID\""
+        type: number
+        primary_key: true
+
+      - name: user_id
+        sql: "{CUBE}.\"USER_ID\""
+        type: number
+
+      - name: age
+        sql: "{CUBE}.\"AGE\""
+        type: number
+
+      - name: city
+        sql: "{CUBE}.\"CITY\""
+        type: string
+
+      - name: gender
+        sql: "{CUBE}.\"GENDER\""
+        type: string
+
+      - name: last_name
+        sql: "{CUBE}.\"LAST_NAME\""
+        type: string
+
+      - name: first_name
+        sql: "{CUBE}.\"FIRST_NAME\""
+        type: string
+
+      - name: state
+        sql: "{CUBE}.\"STATE\""
+        type: string
+
+      - name: created_at
+        sql: "{CUBE}.\"CREATED_AT\""
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

@@ -1,0 +1,32 @@
+cubes:
+  - name: products
+    sql_table: "\"ECOM\".\"PRODUCTS\""
+
+    joins: []
+
+    dimensions:
+      - name: id
+        sql: "{CUBE}.\"ID\""
+        type: number
+        primary_key: true
+
+      - name: product_category
+        sql: "{CUBE}.\"PRODUCT_CATEGORY\""
+        type: string
+
+      - name: name
+        sql: "{CUBE}.\"NAME\""
+        type: string
+
+      - name: created_at
+        sql: "{CUBE}.\"CREATED_AT\""
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+
