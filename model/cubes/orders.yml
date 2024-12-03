@@ -33,6 +33,7 @@ cubes:
 
 # columns 
       - name: status
+        description: "The status of the order - can be processing, shipped, or completed"
         sql: "{CUBE}.\"STATUS\""
         type: string
       
@@ -55,13 +56,34 @@ cubes:
       - name: completed_order_percentage
         description: "Percent of orders with the status 'completed'"
         type: number
-        sql: "(number_of_completed_orders/NULLIF(number_of_orders,0)) * 100"
+        sql: "({CUBE.number_of_completed_orders} / NULLIF({CUBE.number_of_orders},0)) * 100"
         format: percent
 
       - name: average_days_to_complete 
         description: "Average number of days between order creation and completion"
         type: avg
         sql: "{CUBE.days_to_complete}"
+
+      - name: number_of_orders_year_to_date
+        description: "The cumulative revenue for the selected year up until todays date"
+        type: count
+        rolling_window:
+          type: to_date
+          granularity: year
+      
+      - name: number_of_orders_quarter_to_date
+        description: "The cumulative revenue for the selected quarter up until todays date"
+        type: count
+        rolling_window:
+          type: to_date
+          granularity: quarter
+      
+      - name: number_of_orders_month_to_date
+        description: "The cumulative revenue for the selected month up until todays date"
+        type: count
+        rolling_window:
+          type: to_date
+          granularity: month
 
     pre_aggregations:
       # Pre-aggregation definitions go here.
