@@ -18,10 +18,12 @@ cubes:
 
 # columns
       - name: product_category
+        description: "The category of the product"
         sql: "{CUBE}.\"PRODUCT_CATEGORY\""
         type: string
 
       - name: name
+        description: "The name of the product"
         sql: "{CUBE}.\"NAME\""
         type: string
 

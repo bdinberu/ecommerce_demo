@@ -37,11 +37,58 @@ cubes:
       - name: number_of_items
         type: count
       
-      - name: total_price
+      - name: total_revenue
         description: "The total price of items sold"
         type: sum 
         sql: "{CUBE.price}"
         format: currency
+      
+      - name: total_revenue_year_to_date
+        description: "The cumulative revenue for the selected year up until todays date"
+        type: sum
+        sql: "{CUBE.price}"
+        rolling_window:
+          type: to_date
+          granularity: year
+        format: currency
+      
+      - name: total_revenue_quarter_to_date
+        description: "The cumulative revenue for the selected quarter up until todays date"
+        type: sum
+        sql: "{CUBE.price}"
+        rolling_window:
+          type: to_date
+          granularity: quarter
+        format: currency
+      
+      - name: total_revenue_month_to_date
+        description: "The cumulative revenue for the selected month up until todays date"
+        type: sum
+        sql: "{CUBE.price}"
+        rolling_window:
+          type: to_date
+          granularity: month
+        format: currency
+
+# not working properly 
+      - name: revenue_prior_year
+        multi_stage: true
+        description: "The total price of items sold in the prior year"
+        type: number
+        sql: "{total_revenue}"
+        time_shift:
+          - time_dimension: line_items.created_at
+            interval: 1 year
+            type: prior
+        format: currency
+      
+      - name: revenue_year_over_year_growth
+        multi_stage: true
+        description: "the percent change in year over year revenue"
+        type: number
+        sql: "{CUBE.total_revenue} / NULLIF(CUBE.revenue_prior_year}, 0) * 100"
+        format: percent
+
 
 
     pre_aggregations:
