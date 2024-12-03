@@ -3,23 +3,16 @@ cubes:
     sql_table: "\"ECOM\".\"LINE_ITEMS\""
 
     joins:
-      - name: orders
-        sql: "{CUBE}.\"ORDER_ID\" = {orders}.\"ID\""
-        relationship: many_to_one
-
       - name: products
-        sql: "{CUBE}.\"PRODUCT_ID\" = {products}.\"ID\""
+        sql: "{line_items.product_id} = {products.id}"
         relationship: many_to_one
 
     dimensions:
+# primary and foreign keys 
       - name: id
         sql: "{CUBE}.\"ID\""
         type: number
         primary_key: true
-
-      - name: price
-        sql: "{CUBE}.\"PRICE\""
-        type: number
 
       - name: order_id
         sql: "{CUBE}.\"ORDER_ID\""
@@ -29,13 +22,27 @@ cubes:
         sql: "{CUBE}.\"PRODUCT_ID\""
         type: number
 
+#time columns 
       - name: created_at
         sql: "{CUBE}.\"CREATED_AT\""
         type: time
 
+# columns 
+      - name: price
+        sql: "{CUBE}.\"PRICE\""
+        type: number
+
+#aggregations 
     measures:
-      - name: count
+      - name: number_of_items
         type: count
+      
+      - name: total_price
+        description: "The total price of items sold"
+        type: sum 
+        sql: "{CUBE.price}"
+        format: currency
+
 
     pre_aggregations:
       # Pre-aggregation definitions go here.
