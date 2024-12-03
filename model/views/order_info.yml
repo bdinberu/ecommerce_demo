@@ -35,6 +35,9 @@ views:
           - id
           - user_id
           - completed_at
+          - number_of_orders_year_to_date
+          - number_of_orders_quarter_to_date
+          - number_of_orders_month_to_date
 
       - join_path: orders.users 
         includes:
