@@ -1,6 +1,7 @@
 cubes:
   - name: line_items
     sql_table: "\"ECOM\".\"LINE_ITEMS\""
+    public: false 
 
     joins:
       - name: products
