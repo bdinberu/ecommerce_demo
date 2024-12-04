@@ -2,6 +2,27 @@
 
 from cube import config
 
+def extract_applied_filters(filters):
+    """
+    Extract all actual filter conditions from a nested filter structure.
+    Returns an empty list if no real filters are applied.
+    
+    Args:
+        filters (dict|list): Filter structure with 'and'/'or' conditions
+        
+    Returns:
+        list: List of actual filter conditions
+    """
+    if isinstance(filters, list):
+        return [f for item in filters for f in extract_applied_filters(item)]
+        
+    if isinstance(filters, dict):
+        if 'and' in filters or 'or' in filters:
+            key = 'and' if 'and' in filters else 'or'
+            return [f for item in filters[key] for f in extract_applied_filters(item)]
+        return [filters]
+        
+    return []
 
 @config('semantic_layer_sync')
 def sls(ctx: dict) -> list:
@@ -20,7 +41,7 @@ def sls(ctx: dict) -> list:
 @config('query_rewrite')
 def query_rewrite(query: dict, ctx: dict) -> dict:
   
-  if not query.get('filters', []):
+  if not extract_applied_filters(query.get('filters', [])):
     raise Exception("Queries can't be run without a filter")
   return query 
 
