@@ -3,33 +3,6 @@ cubes:
     sql_table: "\"ECOM\".\"USERS\""
     public: false
 
-    access_policy:
-      - role: administrator
-
-      # - role: sales_manager
-      #   member_level:
-      #     excludes:
-      #       - first_name
-      #       - last_name
-      #       - full_name
-      #   row_level:
-      #     filters:
-      #       - member: "{state}"
-      #         operator: equals
-      #         values: "{ [securityContext.state] }"
-
-      - role: '*'
-        member_level:
-          includes:
-            - gender 
-            - city 
-            - state
-        row_level:
-          filters:
-            - member: "{CUBE.state}"
-              operator: equals
-              values: ["{securityContext.state}"]
-
     joins: []
 
     segments:

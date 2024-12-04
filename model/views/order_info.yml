@@ -1,31 +1,6 @@
 views:
   - name: order_information
     description: "This view contains information about orders placed"
-    meta:
-
-# Excel drill-down hierarchies 
-      hierarchies:
-        - name: "Geography"
-          levels:
-            - state
-            - city
-
-#Excel measure folders 
-      folders:
-          - name: "Counts"
-            members:
-              - number_of_orders
-              - number_of_completed_orders
-              - number_of_items
-          - name: "Totals"
-            members:
-              - total_revenue
-          - name: "Averages"
-            members:
-              - average_days_to_complete
-          - name: "Percentages"
-            members:
-              - completed_order_percentage
 
 # tables to be included in view    
     cubes:  
@@ -57,3 +32,44 @@ views:
           - name
           - product_category
           - number_of_products
+
+# data access policiies 
+    access_policy:
+      - role: '*'
+        member_level:
+          includes:
+            - gender 
+            - city 
+            - state
+        row_level:
+          filters:
+            - member: "{CUBE.state}"
+              operator: equals
+              values: ["{securityContext.state}"]
+      
+      - role: administrator
+
+    meta:
+# Excel drill-down hierarchies 
+      hierarchies:
+        - name: "Geography"
+          levels:
+            - state
+            - city
+
+#Excel measure folders 
+      folders:
+          - name: "Counts"
+            members:
+              - number_of_orders
+              - number_of_completed_orders
+              - number_of_items
+          - name: "Totals"
+            members:
+              - total_revenue
+          - name: "Averages"
+            members:
+              - average_days_to_complete
+          - name: "Percentages"
+            members:
+              - completed_order_percentage
