@@ -21,6 +21,7 @@ views:
           - city 
           - state
           - number_of_users
+          - first_name
 
       - join_path: orders.line_items
         includes:
@@ -37,10 +38,8 @@ views:
     access_policy:
       - role: '*'
         member_level:
-          includes:
-            - gender 
-            - city 
-            - state
+          excludes:
+            - first_name 
         row_level:
           filters:
             - member: "{CUBE.state}"
