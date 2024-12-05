@@ -87,6 +87,13 @@ cubes:
           granularity: month
 
     pre_aggregations:
-      # Pre-aggregation definitions go here.
-      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+      - name: order_facts 
+        measures:
+          - number_of_orders
+          - number_of_completed_orders
+          - completed_order_percentage
+        time_dimension: created_at 
+        granularity: day 
+        refresh_key:
+          every: 12 hours 
 
