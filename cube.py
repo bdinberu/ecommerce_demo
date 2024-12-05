@@ -75,7 +75,6 @@ def check_sql_auth(query: dict, username: str, password: str) -> dict:
   print(security_context)
   security_context = {
     'username': username, 
-    'password': password, 
     'roles': "administrator"
   }
   print(security_context)
