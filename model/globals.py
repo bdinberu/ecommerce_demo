@@ -1,7 +1,9 @@
 from cube import TemplateContext
  
 template = TemplateContext()
- 
+
+# Validating whether the user is assigned a 'trusted' role
+# Creating a rule to only display unmasked data to 'trusted' roles 
 @template.function('masked')
 def masked(sql, security_context):
   trusted_roles = ['administrator', 'executive']

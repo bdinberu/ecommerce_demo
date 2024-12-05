@@ -59,11 +59,10 @@ def extract_matching_dicts(data):
 
 
 # Creating a data policy that restricts queries without filters from being executed
-@config('query_rewrite')
-def query_rewrite(query: dict, ctx: dict) -> dict:
-  print(query.get('filters'))
-  filters = extract_matching_dicts(query.get('filters'))
+# @config('query_rewrite')
+# def query_rewrite(query: dict, ctx: dict) -> dict:
+#   filters = extract_matching_dicts(query.get('filters'))
   
-  if not filters:
-    raise Exception("Queries can't be run without a filter")
-  return query 
+#   if not filters:
+#     raise Exception("Queries can't be run without a filter")
+#   return query 
