@@ -72,10 +72,11 @@ def extract_matching_dicts(data):
 # Validate the username and password of the user submitting the API request 
 @config('check_sql_auth')
 def check_sql_auth(query: dict, username: str, password: str) -> dict:
+  print(security_context)
   security_context = {
     'username': username, 
     'password': password, 
-    'role': "administrator"
+    'roles': "administrator"
   }
   print(security_context)
   return {
