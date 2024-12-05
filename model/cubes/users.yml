@@ -5,12 +5,6 @@ cubes:
 
     joins: []
 
-    segments:
-      - name: west_coast_users 
-        description: "customers that live in the west coast of the United States"
-        sql: >
-          {CUBE.city} IN ('Los Angeles', 'Mountain View', 'Palo Alto', 'San Francisco', 'Seattle')
-
     dimensions:
 # primary and foreign keys 
       - name: id
@@ -61,6 +55,13 @@ cubes:
     measures:
       - name: number_of_users
         type: count
+
+# custom filter segments 
+    segments:
+      - name: west_coast_users 
+        description: "customers that live in the west coast of the United States"
+        sql: >
+          {CUBE.city} IN ('Los Angeles', 'Mountain View', 'Palo Alto', 'San Francisco', 'Seattle')
 
     pre_aggregations:
       # Pre-aggregation definitions go here.
