@@ -52,11 +52,11 @@ views:
             - first_name 
             - last_name
             - full_name
-        row_level:
-          filters:
-            - member: "{CUBE.state}"
-              operator: equals
-              values: ["{securityContext.state}"]
+        # row_level:
+        #   filters:
+        #     - member: "{CUBE.state}"
+        #       operator: equals
+        #       values: ["{securityContext.state}"]
 
     meta:
 # Excel drill-down hierarchies 
