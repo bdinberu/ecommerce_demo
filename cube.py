@@ -70,15 +70,15 @@ def extract_matching_dicts(data):
 #   return query 
 
 # Validate the username and password of the user submitting the API request 
-@config('check_sql_auth')
-def check_sql_auth(query: dict, username: str, password: str) -> dict:
-  print(security_context)
-  security_context = {
-    'username': username
-    # , 'roles': "administrator"
-  }
-  print(security_context)
-  return {
-    'password': os.environ['CUBEJS_SQL_PASSWORD'],
-    'securityContext': security_context
-  }
+# @config('check_sql_auth')
+# def check_sql_auth(query: dict, username: str, password: str) -> dict:
+#   print(security_context)
+#   security_context = {
+#     'username': username,
+#     'roles': "administrator"
+#   }
+#   print(security_context)
+#   return {
+#     'password': os.environ['CUBEJS_SQL_PASSWORD'],
+#     'securityContext': security_context
+#   }
