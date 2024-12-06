@@ -74,8 +74,8 @@ def extract_matching_dicts(data):
 def check_sql_auth(query: dict, username: str, password: str) -> dict:
   print(security_context)
   security_context = {
-    'username': username, 
-    'roles': "administrator"
+    'username': username
+    # , 'roles': "administrator"
   }
   print(security_context)
   return {
