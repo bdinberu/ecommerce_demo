@@ -26,17 +26,17 @@ def context_mapping(ctx: dict):
 
 
 # Identifying any roles that have been assigned to the user 
-# @config('context_to_roles')
-# def context_to_roles(context):
-#   security_context = context.get("securityContext", {})
-#   print(f"{security_context}")
+@config('context_to_roles')
+def context_to_roles(context):
+  security_context = context.get("securityContext", {})
+  print(f"{security_context}")
 
-#   roles = context.get("securityContext", {}).get("cubeCloud", {}).get("roles", [])
-#   if roles:
-#       print(f"Roles found: {roles}")
-#   else:
-#       print("No roles found, returning empty list.")
-#   return roles
+  roles = context.get("securityContext", {}).get("cubeCloud", {}).get("roles", [])
+  if roles:
+      print(f"Roles found: {roles}")
+  else:
+      print("No roles found, returning empty list.")
+  return roles
 
 
 # ContentToRules modifies the filter object and adds a new 'and' dictionary 

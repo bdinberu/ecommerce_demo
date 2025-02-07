@@ -38,7 +38,7 @@ views:
 
 # data access policiies 
     access_policy:
-      - role: administrator
+      - role: leadership
 
       - role: manager 
         member_level:
