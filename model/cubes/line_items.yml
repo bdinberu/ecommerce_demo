@@ -1,3 +1,9 @@
+{%- set metrics = {
+  "Last Year Year": "year",
+  "Last Year Week": "week",
+  "Last Year Date": "day"
+} %}
+
 cubes:
   - name: line_items
     sql_table: "\"ECOM\".\"LINE_ITEMS\""
@@ -7,6 +13,10 @@ cubes:
       - name: products
         sql: "{line_items.product_id} = {products.id}"
         relationship: many_to_one
+
+      - name: items
+        sql: "1 = 1"
+        relationship: one_to_many 
 
     dimensions:
 # primary and foreign keys 
@@ -33,6 +43,7 @@ cubes:
         sql: "{CUBE}.\"PRICE\""
         type: number
 
+
 #aggregations 
     measures:
       - name: number_of_items
@@ -41,7 +52,7 @@ cubes:
       - name: total_revenue
         description: "The total price of items sold"
         type: sum 
-        sql: "{CUBE.price}"
+        sql: "{CUBE}.\"PRICE\""
         format: currency
       
       - name: total_revenue_year_to_date
@@ -72,16 +83,26 @@ cubes:
         format: currency
 
 # not working properly 
-      - name: revenue_prior_year
+      {%- for name, timeframe in metrics | items %}
+      - name: revenue_prior_{{ timeframe | safe }}
         multi_stage: true
         description: "The total price of items sold in the prior year"
         type: number
         sql: "{total_revenue}"
         time_shift:
           - time_dimension: line_items.created_at
-            interval: 1 year
+            interval: 1 {{timeframe | safe}}
             type: prior
         format: currency
+      {% endfor %}
+
+      - name: total_revenue_prior_year
+        type: sum
+        sql: "{CUBE.price}"
+        rolling_window:
+          trailing: 1 year
+          offset: start
+
       
       - name: revenue_year_over_year_growth
         multi_stage: true
