@@ -42,6 +42,8 @@ views:
 
       - role: manager 
         member_level:
+          includes:
+            - last_name
           excludes:
             - first_name
             - full_name
