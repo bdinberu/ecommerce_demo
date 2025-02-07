@@ -34,17 +34,20 @@ cubes:
 
       - name: last_name
         description: "The last name of the customer"
-        sql: {{ masked("{CUBE}.\"LAST_NAME\"", COMPILE_CONTEXT.securityContext) }}
+        sql: "{CUBE}.\"LAST_NAME\""
+        # sql: {{ masked("{CUBE}.\"LAST_NAME\"", COMPILE_CONTEXT.securityContext) }}
         type: string
 
       - name: first_name
         description: "The first name of the customer"
-        sql: {{ masked("{CUBE}.\"FIRST_NAME\"", COMPILE_CONTEXT.securityContext) }}
+        sql: "{CUBE}.\"FIRST_NAME\""
+        # sql: {{ masked("{CUBE}.\"FIRST_NAME\"", COMPILE_CONTEXT.securityContext) }}
         type: string
 
       - name: full_name
         description: "The full name of the customer"
-        sql: {{ masked("{CUBE.first_name} || ' ' || {CUBE.last_name}", COMPILE_CONTEXT.securityContext) }}
+        sql: "{CUBE.first_name} || ' ' || {CUBE.last_name}"
+        # sql: {{ masked("{CUBE.first_name} || ' ' || {CUBE.last_name}", COMPILE_CONTEXT.securityContext) }}
         type: string 
 
       - name: state

@@ -1,0 +1,11 @@
+views:
+  - name: item_information
+    description: "This view contains information about items placed"
+
+# tables to be included in view    
+    cubes:  
+      - join_path: line_items
+        includes: "*"
+      
+      - join_path: line_items.items
+        includes: "*"

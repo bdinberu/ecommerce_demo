@@ -1,0 +1,10 @@
+cubes:
+  - name: items
+    # sql_table: "UNNEST(column_name)"
+    sql: "SELECT * FROM UNNEST(column_name)"
+    public: false 
+
+    dimensions:
+      - name: test 
+        sql: "{CUBE}.test"
+        type: number 
