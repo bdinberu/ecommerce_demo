@@ -1,7 +1,7 @@
 {%- set metrics = {
   "Last Year Year": "year",
-  "Last Year Week": "week",
-  "Last Year Date": "day"
+  "Last Year Month": "month",
+  "Last Year Week": "week"
 } %}
 
 cubes:
@@ -90,7 +90,7 @@ cubes:
         type: number
         sql: "{total_revenue}"
         time_shift:
-          - time_dimension: line_items.created_at
+          - time_dimension: item_information.created_at
             interval: 1 {{timeframe | safe}}
             type: prior
         format: currency
