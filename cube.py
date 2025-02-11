@@ -41,42 +41,42 @@ def context_to_roles(context):
 
 # ContentToRules modifies the filter object and adds a new 'and' dictionary 
 # Determining the actual filter conditions 
-# def extract_matching_dicts(data):
-#     matching_dicts = []
-#     keys = ['values', 'member', 'operator']
+def extract_matching_dicts(data):
+    matching_dicts = []
+    keys = ['values', 'member', 'operator']
 
-#     # Recursive function to traverse through the list or dictionary
-#     def traverse(element):
-#         if isinstance(element, dict):
-#             # Check if any of the specified keys are in the dictionary
-#             if any(key in element for key in keys):
-#                 matching_dicts.append(element)
-#             # Traverse the dictionary values
-#             for value in element.values():
-#                 traverse(value)
-#         elif isinstance(element, list):
-#             # Traverse the list items
-#             for item in element:
-#                 traverse(item)
+    # Recursive function to traverse through the list or dictionary
+    def traverse(element):
+        if isinstance(element, dict):
+            # Check if any of the specified keys are in the dictionary
+            if any(key in element for key in keys):
+                matching_dicts.append(element)
+            # Traverse the dictionary values
+            for value in element.values():
+                traverse(value)
+        elif isinstance(element, list):
+            # Traverse the list items
+            for item in element:
+                traverse(item)
 
-#     traverse(data)
-#     return matching_dicts
+    traverse(data)
+    return matching_dicts
 
 
 # Creating a data policy that restricts queries without filters from being executed
-# @config('query_rewrite')
-# def query_rewrite(query: dict, ctx: dict) -> dict:
-#   filters = extract_matching_dicts(query.get('filters'))
+@config('query_rewrite')
+def query_rewrite(query: dict, ctx: dict) -> dict:
+  filters = extract_matching_dicts(query.get('filters'))
   
-#   for value in range(len(query['timeDimensions'])):
-#     filters.append(query['timeDimensions'][value]['dateRange'])
+  for value in range(len(query['timeDimensions'])):
+    filters.append(query['timeDimensions'][value]['dateRange'])
 
-#   print(query)
-#   print(filters)
+  print(query)
+  print(filters)
 
-#   if not filters or None in filters:
-#     raise Exception("Queries can't be run without a filter")
-#   return query 
+  if not filters or None in filters:
+    raise Exception("Queries can't be run without a filter")
+  return query 
 
 # Validate the username and password of the user submitting the API request 
 # @config('check_sql_auth')
