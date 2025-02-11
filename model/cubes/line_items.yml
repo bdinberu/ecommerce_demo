@@ -1,9 +1,3 @@
-{%- set metrics = {
-  "Last Year Year": "year",
-  "Last Year Week": "week",
-  "Last Year Date": "day"
-} %}
-
 cubes:
   - name: line_items
     sql_table: "\"ECOM\".\"LINE_ITEMS\""
@@ -83,18 +77,16 @@ cubes:
         format: currency
 
 # not working properly 
-      {%- for name, timeframe in metrics | items %}
-      - name: revenue_prior_{{ timeframe | safe }}
+      - name: revenue_prior_year
         multi_stage: true
         description: "The total price of items sold in the prior year"
         type: number
-        sql: "{total_revenue}"
+        sql: "{CUBE.total_revenue}"
         time_shift:
           - time_dimension: line_items.created_at
-            interval: 1 {{timeframe | safe}}
+            interval: 365 day
             type: prior
         format: currency
-      {% endfor %}
 
       - name: total_revenue_prior_year
         type: sum
