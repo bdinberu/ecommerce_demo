@@ -12,7 +12,7 @@ def masked(sql, security_context):
   # print("masked check")
   # print(security_context["cubeCloud"])
 
-  if security_context["cubeCloud"].setdefault('roles') is not None:
+  if 'cubeCloud' in security_context and security_context["cubeCloud"].setdefault('roles') is not None:
     for role in security_context["cubeCloud"].setdefault('roles'):
       if role in trusted_roles:
         role_check = True 
