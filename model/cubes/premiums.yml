@@ -1,0 +1,34 @@
+cubes:
+  - name: premiums
+    public: false
+    data_source: datasource1
+    sql: >
+      select '1' as policy_id, '2024-01-01' as start_date, '2025-01-01' as end_date, 100 AS premium
+      UNION ALL
+      select '2' as policy_id, '2024-04-01' as start_date, '2025-04-01' as end_date, 200 AS premium 
+      UNION ALL
+      select '3' as policy_id, '2024-08-01' as start_date, '2025-08-01' as end_date, 300 AS premium 
+    dimensions:
+      - name: policy_id
+        sql: policy_id
+        type: string
+        primary_key: true
+
+      - name: start_date
+        sql: start_date::timestamp
+        type: time
+
+      - name: end_date
+        sql: end_date::timestamp
+        type: time
+      
+    measures:
+      - name: premium_rolling
+        type: sum
+        sql: premium
+        rolling_window:
+          trailing: unbounded
+
+      - name: premium
+        type: sum
+        sql: premium
