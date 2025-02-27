@@ -1,0 +1,45 @@
+cubes:
+  - name: subscriptions
+    public: false
+    data_source: datasource1
+    sql: >
+      select '1' as customer_id, '2025-01-03' as status_timestamp, 'A' as tier, 'New' as subscriptions_event_type
+      UNION ALL
+      select '1' as customer_id, '2025-02-07' as status_timestamp, 'B' as tier, 'Upgrade' as subscriptions_event_type
+      UNION ALL
+      select '2' as customer_id, '2024-11-04' as status_timestamp, 'A' as tier, 'New' as subscriptions_event_type
+      UNION ALL
+      select '2' as customer_id, '2024-12-04' as status_timestamp, 'A' as tier, 'Expired' as subscriptions_event_type
+      UNION ALL
+      select '3' as customer_id, '2024-12-01' as status_timestamp, 'B' as tier, 'New' as subscriptions_event_type
+      UNION ALL
+      select '4' as customer_id, '2025-01-01' as status_timestamp, 'A' as tier, 'New' as subscriptions_event_type
+      UNION ALL
+      select '4' as customer_id, '2025-02-01' as status_timestamp, 'A' as tier, 'Renew' as subscriptions_event_type
+    dimensions:
+      - name: customer_id
+        sql: customer_id
+        type: string
+        primary_key: true
+
+      - name: tier
+        sql: tier
+        type: string
+        primary_key: true
+
+      - name: status_timestamp
+        sql: status_timestamp::timestamp
+        type: time
+        primary_key: true
+      
+    measures:
+      - name: active_users
+        type: count
+        sql: customer_id
+        rolling_window:
+          trailing: 1 month
+          # offset: end
+
+      - name: count
+        type: count
+        sql: customer_id
