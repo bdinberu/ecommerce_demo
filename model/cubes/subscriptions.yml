@@ -43,3 +43,16 @@ cubes:
       - name: count
         type: count
         sql: customer_id
+
+    pre_aggregations:
+      - name: main
+        dimensions:
+          - customer_id
+          - tier
+        measures:
+          - active_users
+          - count
+        time_dimension: status_timestamp
+        granularity: day
+        partition_granularity: year
+        scheduled_refresh: false
