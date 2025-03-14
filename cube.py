@@ -21,7 +21,6 @@ def sls(ctx: dict) -> list:
 
 @config('context_to_api_scopes')
 def context_to_api_scopes(ctx: dict, default_scopes: list[str]) -> list[str]:
-  print(ctx)
   if ctx.get('service', False):
     return ["jobs"] + default_scopes
   return default_scopes
