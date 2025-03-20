@@ -3,11 +3,17 @@ cubes:
     public: false
     data_source: datasource1
     sql: >
-      select '1' as policy_id, '2024-01-01' as start_date, '2025-01-01' as end_date, 100 AS premium
+      select '1' as policy_id, '2024-01-01' as start_date, '2025-01-01' as end_date, 100 AS premium, 1 AS c
       UNION ALL
-      select '2' as policy_id, '2024-04-01' as start_date, '2025-04-01' as end_date, 200 AS premium 
+      select '2' as policy_id, '2024-04-01' as start_date, '2025-04-01' as end_date, 200 AS premium, 1 AS c
       UNION ALL
-      select '3' as policy_id, '2024-08-01' as start_date, '2025-08-01' as end_date, 300 AS premium 
+      select '3' as policy_id, '2024-08-01' as start_date, '2025-08-01' as end_date, 300 AS premium, 1 AS c
+      UNION ALL
+      select '4' as policy_id, '2024-09-01' as start_date, '2025-09-01' as end_date, 300 AS premium, 1 AS c
+      UNION ALL
+      select '5' as policy_id, '2024-10-01' as start_date, '2025-10-01' as end_date, 300 AS premium, 1 AS c
+      UNION ALL
+      select '6' as policy_id, '2024-11-01' as start_date, '2025-11-01' as end_date, 300 AS premium, 1 AS c
     dimensions:
       - name: policy_id
         sql: policy_id
@@ -29,6 +35,19 @@ cubes:
         rolling_window:
           trailing: unbounded
 
+      - name: running_total
+        type: runningTotal
+        sql: c
+
       - name: premium
         type: sum
         sql: premium
+
+    # pre_aggregations:
+    #   - name: main
+    #     measures:
+    #       - running_total
+    #     time_dimension: start_date
+    #     granularity: day
+    #     refresh_key:
+    #       every: 52 week
