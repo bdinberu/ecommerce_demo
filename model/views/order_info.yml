@@ -42,6 +42,8 @@ views:
 
       - role: leadership
 
+      - role: Developer
+
       - role: manager 
         member_level:
           includes:
