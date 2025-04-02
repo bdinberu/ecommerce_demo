@@ -1,0 +1,18 @@
+{%- set columns = ["column_1", "column_2"] %}
+
+cubes:
+  - name: jinja_test
+    sql: >
+      SELECT 
+      {%- for column in columns %}
+      {{column | safe}} {% if not loop.last %},{% endif %}
+      {%- endfor %}
+      FROM TABLE_1
+
+    joins: []
+
+    dimensions:
+      - name: id
+        sql: "{CUBE}.\"ID\""
+        type: number
+        primary_key: true

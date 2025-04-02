@@ -64,19 +64,19 @@ def extract_matching_dicts(data):
 
 
 # Creating a data policy that restricts queries without filters from being executed
-@config('query_rewrite')
-def query_rewrite(query: dict, ctx: dict) -> dict:
-  filters = extract_matching_dicts(query.get('filters'))
+# @config('query_rewrite')
+# def query_rewrite(query: dict, ctx: dict) -> dict:
+#   filters = extract_matching_dicts(query.get('filters'))
   
-  for value in range(len(query['timeDimensions'])):
-    filters.append(query['timeDimensions'][value]['dateRange'])
+#   for value in range(len(query['timeDimensions'])):
+#     filters.append(query['timeDimensions'][value]['dateRange'])
 
-  print(query)
-  print(filters)
+#   print(query)
+#   print(filters)
 
-  if not filters or None in filters:
-    raise Exception("Queries can't be run without a filter")
-  return query 
+#   if not filters or None in filters:
+#     raise Exception("Queries can't be run without a filter")
+#   return query 
 
 # Validate the username and password of the user submitting the API request 
 # @config('check_sql_auth')
