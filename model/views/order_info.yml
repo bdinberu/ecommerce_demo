@@ -37,28 +37,32 @@ views:
           - number_of_products
 
 # data access policiies 
-    access_policy:
-      - role: leadership
+    # access_policy:
+      # - role: admin
 
-      - role: manager 
-        member_level:
-          includes:
-            - last_name
-          excludes:
-            - first_name
-            - full_name
+      # - role: leadership
 
-      - role: '*'
-        member_level:
-          excludes:
-            - first_name 
-            - last_name
-            - full_name
-        row_level:
-          filters:
-            - member: "{CUBE.state}"
-              operator: equals
-              values: ["{securityContext.state}"]
+      # - role: Developer
+
+      # - role: manager 
+      #   member_level:
+      #     includes:
+      #       - last_name
+      #     excludes:
+      #       - first_name
+      #       - full_name
+
+      # - role: '*'
+      #   member_level:
+      #     excludes:
+      #       - first_name 
+      #       - last_name
+      #       - full_name
+      #   row_level:
+      #     filters:
+      #       - member: "order_information.state"
+      #         operator: equals
+      #         values: [ "{securityContext.state}"]
 
     meta:
 # Excel drill-down hierarchies 

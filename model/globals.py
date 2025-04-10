@@ -21,3 +21,13 @@ def masked(sql, security_context):
     return sql
   else:
     return "'--- masked ---'"
+
+
+@template.function('add_rls')
+def add_rls(context):
+  security_context = context.get('security_context', context.get('securityContext', {}))
+  print(f'add_rls: {security_context}')
+  if 'state' in security_context:
+    return security_context['state']
+  # default state
+  return 'us-ca'
