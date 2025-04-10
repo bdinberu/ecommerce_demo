@@ -43,7 +43,7 @@ def sls(ctx: dict) -> list:
     return [{
   "type": "tableau-cloud",
   "name": "Tableau Cloud Sync",
-  "useRlsFilters": True,
+  # "useRlsFilters": True,
   "config": {
     "database": "Cube Cloud: bd_ecomm_demo",
     "personalAccessToken": "ecomm_demo_bd",
