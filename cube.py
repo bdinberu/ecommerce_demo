@@ -100,20 +100,7 @@ def query_rewrite(query: dict, ctx: dict) -> dict:
 # Validate the username and password of the user submitting the API request 
 @config('check_sql_auth')
 def check_sql_auth(query: dict, username: str, password: str) -> dict:
-  # Perform a user lookup to your identity provider (e.g. LDAP)
-  # When username is different than the service account like 'cube'
-  # e.g. get_security_context(username)
-  security_context = {
-    'user_name': username,
-    'state': 'us-ca'
-  }
-
-  print(f'check_sql_auth: {security_context}')
-  
-  return {
-    'password': os.environ['CUBEJS_SQL_PASSWORD'],
-    'securityContext': security_context
-  }
+  raise Exception('You should be able to see this error in the logs')
 
 @config('can_switch_sql_user')
 def can_switch_sql_user(current_user: str, new_user: str) -> dict:
