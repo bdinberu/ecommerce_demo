@@ -54,6 +54,22 @@ cubes:
         type: sum 
         sql: "{CUBE}.\"PRICE\""
         format: currency
+
+      - name: total_revenue_ts
+        multi_stage: true
+        sql: "{total_revenue}"
+        type: number
+        time_shift:
+          - time_dimension: created_at
+            interval: 1 year
+            type: prior
+          - time_dimension: created_at
+            interval: 1 month
+            type: prior
+          - time_dimension: created_at
+            interval: 1 month
+            type: next
+
       
       - name: total_revenue_year_to_date
         description: "The cumulative revenue for the selected year up until todays date"
